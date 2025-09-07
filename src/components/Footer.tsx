@@ -222,7 +222,7 @@ export default function Footer({ isDark = false }: FooterProps) {
             }`} />
             <span className={`${
               isDark ? 'text-gray-300' : 'text-gray-600'
-            }`}>+91 98765 43210</span>
+            }`}>+91 9736211316</span>
           </div>
           <div className="flex items-center gap-3">
             <MapPin className={`w-5 h-5 ${
@@ -230,7 +230,7 @@ export default function Footer({ isDark = false }: FooterProps) {
             }`} />
             <span className={`${
               isDark ? 'text-gray-300' : 'text-gray-600'
-            }`}>Mumbai, India</span>
+            }`}>Nautanwa, Maharajganj</span>
           </div>
         </motion.div>
 

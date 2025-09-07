@@ -1,7 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ChevronDown, Sparkles, Zap, BookOpen } from 'lucide-react';
+import { ChevronDown, Sparkles, Zap, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 interface HeroProps {
   onDemoClick: () => void;
@@ -9,6 +11,61 @@ interface HeroProps {
 }
 
 export default function Hero({ onDemoClick, isDark = false }: HeroProps) {
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  const kidImages = [
+    { src: '/kid-1.png', alt: 'Happy student learning with Study Sparks' },
+    { src: '/kid-2.png', alt: 'Young learner engaged with educational content' },
+    { src: '/kid-3.png', alt: 'Child exploring AI and technology concepts' },
+    { src: '/kid-4.png', alt: 'Student mastering coding and programming' },
+    { src: '/kid-5.png', alt: 'Curious child discovering new learning adventures' },
+    { src: '/kid-6.png', alt: 'Young innovator building creative projects' },
+    { src: '/kid-7.png', alt: 'Focused student solving complex problems' },
+    { src: '/kid-8.png', alt: 'Enthusiastic learner exploring digital worlds' }
+  ];
+
+  // Detect screen size
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkIsDesktop();
+    window.addEventListener('resize', checkIsDesktop);
+    return () => window.removeEventListener('resize', checkIsDesktop);
+  }, []);
+
+  // Auto-rotate carousel every 4 seconds
+  useEffect(() => {
+    const maxSlides = isDesktop ? 3 : 8;
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % maxSlides);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isDesktop]);
+
+  const nextImage = () => {
+    const maxSlides = isDesktop ? 3 : 8;
+    setCurrentImage((prev) => (prev + 1) % maxSlides);
+  };
+
+  const prevImage = () => {
+    const maxSlides = isDesktop ? 3 : 8;
+    setCurrentImage((prev) => (prev - 1 + maxSlides) % maxSlides);
+  };
+
+  // Get current images to display based on slide (desktop: 3 images each)
+  const getCurrentImages = () => {
+    if (currentImage === 0) {
+      return kidImages.slice(0, 3); // Images 1, 2, 3
+    } else if (currentImage === 1) {
+      return kidImages.slice(3, 6); // Images 4, 5, 6
+    } else {
+      return kidImages.slice(5, 8); // Images 6, 7, 8 (overlapping for smooth transition)
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Enhanced Animated Background - Violet Theme */}
@@ -380,6 +437,202 @@ export default function Hero({ onDemoClick, isDark = false }: HeroProps) {
               />
             </span>
           </motion.button>
+        </motion.div>
+
+        {/* Kids Images Carousel */}
+        <motion.div
+          className="mt-16 mb-8"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          <div className="relative w-full max-w-5xl mx-auto px-4">
+            {/* Desktop: 3 images side by side, Mobile: Single image carousel */}
+            {isDesktop ? (
+              <div>
+                {/* Desktop Grid View */}
+                <motion.div
+                  className="grid grid-cols-3 gap-6"
+                  key={currentImage}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {getCurrentImages().map((image, index) => (
+                    <div key={`${currentImage}-${index}`} className="relative overflow-hidden rounded-2xl shadow-2xl aspect-[3/4] group">
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                  ))}
+                </motion.div>
+
+                {/* Desktop Navigation */}
+                <div className="flex justify-center items-center mt-6 space-x-4">
+                  <motion.button
+                    className={`w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-300 ${
+                      isDark
+                        ? 'bg-black/30 border-white/20 text-white hover:bg-black/50'
+                        : 'bg-white/30 border-gray-300/50 text-gray-700 hover:bg-white/50'
+                    }`}
+                    onClick={prevImage}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <ChevronLeft className="w-6 h-6 mx-auto" />
+                  </motion.button>
+
+                  <motion.button
+                    className={`w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-300 ${
+                      isDark
+                        ? 'bg-black/30 border-white/20 text-white hover:bg-black/50'
+                        : 'bg-white/30 border-gray-300/50 text-gray-700 hover:bg-white/50'
+                    }`}
+                    onClick={nextImage}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <ChevronRight className="w-6 h-6 mx-auto" />
+                  </motion.button>
+                </div>
+
+                {/* Desktop Indicators */}
+                <div className="flex justify-center mt-4 space-x-3">
+                  {[0, 1, 2].map((index) => (
+                    <motion.button
+                      key={index}
+                      className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                        index === currentImage
+                          ? isDark
+                            ? 'bg-white'
+                            : 'bg-violet-600'
+                          : isDark
+                            ? 'bg-white/40'
+                            : 'bg-violet-300'
+                      }`}
+                      onClick={() => setCurrentImage(index)}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.8 }}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className="relative max-w-sm mx-auto">
+                  <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                    <motion.div
+                      className="aspect-[4/5] relative"
+                      key={currentImage}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <Image
+                        src={kidImages[currentImage].src}
+                        alt={kidImages[currentImage].alt}
+                        fill
+                        className="object-cover"
+                        sizes="100vw"
+                      />
+                    </motion.div>
+
+                    {/* Mobile Navigation Arrows */}
+                    <motion.button
+                      className={`absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full backdrop-blur-md border transition-all duration-300 ${
+                        isDark
+                          ? 'bg-black/30 border-white/20 text-white hover:bg-black/50'
+                          : 'bg-white/30 border-gray-300/50 text-gray-700 hover:bg-white/50'
+                      }`}
+                      onClick={prevImage}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <ChevronLeft className="w-5 h-5 mx-auto" />
+                    </motion.button>
+
+                    <motion.button
+                      className={`absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full backdrop-blur-md border transition-all duration-300 ${
+                        isDark
+                          ? 'bg-black/30 border-white/20 text-white hover:bg-black/50'
+                          : 'bg-white/30 border-gray-300/50 text-gray-700 hover:bg-white/50'
+                      }`}
+                      onClick={nextImage}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <ChevronRight className="w-5 h-5 mx-auto" />
+                    </motion.button>
+                  </div>
+
+                  {/* Mobile Indicators */}
+                  <div className="flex justify-center mt-4 space-x-3">
+                    {kidImages.map((_, index) => (
+                      <motion.button
+                        key={index}
+                        className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                          index === currentImage
+                            ? isDark
+                              ? 'bg-white'
+                              : 'bg-violet-600'
+                            : isDark
+                              ? 'bg-white/40'
+                              : 'bg-violet-300'
+                        }`}
+                        onClick={() => setCurrentImage(index)}
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.8 }}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Mobile Caption */}
+                  <motion.div
+                    className="text-center mt-4 px-4"
+                    key={currentImage}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <p className={`text-sm font-medium leading-relaxed ${
+                      isDark ? 'text-gray-300' : 'text-gray-600'
+                    }`}>
+                      {kidImages[currentImage].alt}
+                    </p>
+                  </motion.div>
+                </div>
+              </div>
+            )}
+
+            {/* Shared Caption for Desktop */}
+            {isDesktop && (
+              <motion.div
+                className="text-center mt-6 px-4"
+                key={currentImage}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <p className={`text-base font-medium leading-relaxed ${
+                  isDark ? 'text-gray-300' : 'text-gray-600'
+                }`}>
+                  {currentImage === 0
+                    ? 'Happy students learning with Study Sparks'
+                    : currentImage === 1
+                      ? 'Curious minds discovering new adventures'
+                      : 'Focused learners mastering digital skills'
+                  }
+                </p>
+              </motion.div>
+            )}
+          </div>
         </motion.div>
 
         {/* Trust indicators - Violet Theme */}
