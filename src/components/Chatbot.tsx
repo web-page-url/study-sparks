@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Send, X, Bot, User, Loader2 } from 'lucide-react';
+import { MessageCircle, Send, X, Bot, User, Loader2, Minimize2 } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface Message {
@@ -18,6 +18,7 @@ interface ChatbotProps {
 
 export default function Chatbot({ isDark = false }: ChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -127,31 +128,61 @@ User query: ${prompt}`;
   return (
     <>
       {/* Chat Button */}
-      <motion.button
-        className="fixed bottom-6 right-6 z-40 w-16 h-16 bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-white/30 relative overflow-hidden group"
-        onClick={() => setIsOpen(true)}
-        whileHover={{
-          scale: 1.1,
-          boxShadow: "0 20px 40px rgba(139, 92, 246, 0.6), 0 0 20px rgba(236, 72, 153, 0.4)"
-        }}
-        whileTap={{ scale: 0.95 }}
-        animate={{
-          y: [0, -12, 0],
-          rotate: [0, 5, -5, 0]
-        }}
-        transition={{
-          y: {
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut"
-          },
-          rotate: {
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }
-        }}
+      <motion.div
+        className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-2"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0 }}
       >
+        {/* Close Arrow */}
+        <motion.button
+          className={`w-8 h-8 rounded-full shadow-lg backdrop-blur-md border transition-all duration-300 ${
+            isDark
+              ? 'bg-gray-800/90 border-gray-700/50 text-white hover:bg-gray-700'
+              : 'bg-white/90 border-gray-300/50 text-gray-700 hover:bg-gray-50'
+          }`}
+          onClick={() => setIsOpen(false)}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          animate={{
+            rotate: isOpen ? 180 : 0,
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          <X className="w-4 h-4 mx-auto" />
+        </motion.button>
+
+        {/* Main Chat Button */}
+        <motion.button
+          className={`w-16 h-16 bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-white/30 relative overflow-hidden group ${
+            isOpen ? 'scale-0' : 'scale-100'
+          }`}
+          onClick={() => {
+            setIsOpen(true);
+            setIsMinimized(false); // Reset minimized state when opening
+          }}
+          whileHover={{
+            scale: 1.1,
+            boxShadow: "0 20px 40px rgba(139, 92, 246, 0.6), 0 0 20px rgba(236, 72, 153, 0.4)"
+          }}
+          whileTap={{ scale: 0.95 }}
+          animate={{
+            y: [0, -12, 0],
+            rotate: [0, 5, -5, 0]
+          }}
+          transition={{
+            y: {
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            },
+            rotate: {
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }
+          }}
+        >
         {/* Animated background glow */}
         <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-purple-400 to-violet-400 opacity-0 group-hover:opacity-30 rounded-full blur-md transition-opacity duration-300"></div>
 
@@ -169,36 +200,44 @@ User query: ${prompt}`;
           }}
         />
 
-        <MessageCircle className="w-8 h-8 text-white mx-auto relative z-10" />
+          <MessageCircle className="w-8 h-8 text-white mx-auto relative z-10" />
 
-        {/* Notification dot */}
-        <motion.div
-          className="absolute -top-1 -right-1 w-4 h-4 bg-pink-400 rounded-full border-2 border-white"
-          animate={{
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          <div className="w-2 h-2 bg-pink-300 rounded-full mx-auto mt-0.5"></div>
-        </motion.div>
-      </motion.button>
+          {/* Notification dot */}
+          <motion.div
+            className="absolute -top-1 -right-1 w-4 h-4 bg-pink-400 rounded-full border-2 border-white"
+            animate={{
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <div className="w-2 h-2 bg-pink-300 rounded-full mx-auto mt-0.5"></div>
+          </motion.div>
+        </motion.button>
+      </motion.div>
 
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-20 right-6 z-50 w-80 h-96 bg-gradient-to-br from-white via-violet-50 to-purple-50 backdrop-blur-lg rounded-2xl shadow-2xl border border-violet-200/50 overflow-hidden"
+            className={`fixed bottom-20 right-6 z-50 bg-gradient-to-br from-white via-violet-50 to-purple-50 backdrop-blur-lg shadow-2xl border border-violet-200/50 overflow-hidden ${
+              isMinimized ? 'w-80 h-16 rounded-2xl' : 'w-80 h-96 flex flex-col rounded-t-2xl'
+            }`}
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              height: isMinimized ? 64 : 384
+            }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ duration: 0.3 }}
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 p-4 flex items-center justify-between relative overflow-hidden">
+            <div className="bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 p-4 flex items-center justify-between relative overflow-hidden flex-shrink-0">
               {/* Animated background pattern */}
               <div className="absolute inset-0 opacity-20">
                 <div className="absolute top-0 left-0 w-16 h-16 bg-white/10 rounded-full -translate-x-8 -translate-y-8"></div>
@@ -225,18 +264,42 @@ User query: ${prompt}`;
                   <p className="text-white/90 text-xs">Your AI Learning Assistant</p>
                 </div>
               </div>
-              <motion.button
-                onClick={() => setIsOpen(false)}
-                className="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-200 border border-white/30 relative z-10"
-                whileHover={{ scale: 1.1, rotate: 90 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <X className="w-5 h-5 text-white" />
-              </motion.button>
+              <div className="flex items-center gap-2 relative z-10">
+                {/* Minimize Button */}
+                <motion.button
+                  onClick={() => setIsMinimized(!isMinimized)}
+                  className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-200 border border-white/30"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  animate={{ rotate: isMinimized ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Minimize2 className="w-4 h-4 text-white" />
+                </motion.button>
+
+                {/* Close Button */}
+                <motion.button
+                  onClick={() => setIsOpen(false)}
+                  className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-200 border border-white/30"
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <X className="w-4 h-4 text-white" />
+                </motion.button>
+              </div>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 max-h-72 bg-gradient-to-b from-violet-50/30 to-purple-50/30">
+            <motion.div
+              className={`overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-violet-50/30 to-purple-50/30 ${
+                isMinimized ? 'h-0 opacity-0' : 'flex-1 opacity-100'
+              }`}
+              animate={{
+                opacity: isMinimized ? 0 : 1,
+                height: isMinimized ? 0 : 'auto'
+              }}
+              transition={{ duration: 0.3 }}
+            >
               {messages.map((message) => (
                 <motion.div
                   key={message.id}
@@ -292,10 +355,14 @@ User query: ${prompt}`;
               )}
 
               <div ref={messagesEndRef} />
-            </div>
+            </motion.div>
 
             {/* Input */}
-            <div className="p-4 border-t border-gray-200 bg-gray-50">
+            <div
+              className={`p-4 border-t border-gray-200 bg-gray-50 flex-shrink-0 ${
+                isMinimized ? 'hidden' : 'block'
+              }`}
+            >
               <div className="flex gap-2">
                 <input
                   ref={inputRef}

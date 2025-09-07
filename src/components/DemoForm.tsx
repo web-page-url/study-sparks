@@ -52,7 +52,11 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
         >
           {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            className={`absolute inset-0 ${
+              isDark
+                ? 'bg-black/80 backdrop-blur-sm'
+                : 'bg-black/40 backdrop-blur-sm'
+            }`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -61,7 +65,11 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
 
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-md card-glass p-8"
+            className={`relative w-full max-w-md p-8 rounded-2xl transition-all duration-300 ${
+              isDark
+                ? 'bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl'
+                : 'bg-white/95 backdrop-blur-md border border-gray-200/50 shadow-xl'
+            }`}
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -69,7 +77,11 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
           >
             {/* Close button */}
             <motion.button
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+              className={`absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full transition-colors ${
+                isDark
+                  ? 'text-gray-400 hover:text-white hover:bg-white/10'
+                  : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+              }`}
               onClick={onClose}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -87,17 +99,17 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
                 >
                   <div className="text-center mb-8">
                     <h2 className={`text-3xl font-bold mb-2 ${
-                      isDark ? 'neon-text' : 'text-gray-800'
+                      isDark ? 'neon-text' : 'text-gray-900'
                     }`}>Book a Free Demo</h2>
                     <p className={`${
-                      isDark ? 'text-gray-300' : 'text-gray-600'
+                      isDark ? 'text-gray-300' : 'text-gray-800'
                     }`}>Experience our learning platform firsthand</p>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label className={`block text-sm font-medium mb-2 ${
-                        isDark ? 'text-gray-300' : 'text-gray-700'
+                        isDark ? 'text-gray-300' : 'text-gray-900'
                       }`}>
                         Full Name
                       </label>
@@ -108,7 +120,11 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
                           name="name"
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors"
+                          className={`w-full pl-10 pr-4 py-3 rounded-lg placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors ${
+                            isDark
+                              ? 'bg-white/10 border border-white/20 text-white'
+                              : 'bg-gray-50 border border-gray-300 text-gray-900'
+                          }`}
                           placeholder="Enter your name"
                           required
                         />
@@ -117,7 +133,7 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
 
                     <div>
                       <label className={`block text-sm font-medium mb-2 ${
-                        isDark ? 'text-gray-300' : 'text-gray-700'
+                        isDark ? 'text-gray-300' : 'text-gray-900'
                       }`}>
                         Email Address
                       </label>
@@ -128,7 +144,11 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
                           name="email"
                           value={formData.email}
                           onChange={handleInputChange}
-                          className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors"
+                          className={`w-full pl-10 pr-4 py-3 rounded-lg placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors ${
+                            isDark
+                              ? 'bg-white/10 border border-white/20 text-white'
+                              : 'bg-gray-50 border border-gray-300 text-gray-900'
+                          }`}
                           placeholder="Enter your email"
                           required
                         />
@@ -137,7 +157,7 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
 
                     <div>
                       <label className={`block text-sm font-medium mb-2 ${
-                        isDark ? 'text-gray-300' : 'text-gray-700'
+                        isDark ? 'text-gray-300' : 'text-gray-900'
                       }`}>
                         Phone Number
                       </label>
@@ -148,7 +168,11 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
                           name="phone"
                           value={formData.phone}
                           onChange={handleInputChange}
-                          className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors"
+                          className={`w-full pl-10 pr-4 py-3 rounded-lg placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors ${
+                            isDark
+                              ? 'bg-white/10 border border-white/20 text-white'
+                              : 'bg-gray-50 border border-gray-300 text-gray-900'
+                          }`}
                           placeholder="Enter your phone number"
                           required
                         />
@@ -157,7 +181,7 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
 
                     <div>
                       <label className={`block text-sm font-medium mb-2 ${
-                        isDark ? 'text-gray-300' : 'text-gray-700'
+                        isDark ? 'text-gray-300' : 'text-gray-900'
                       }`}>
                         Child's Age
                       </label>
@@ -168,7 +192,11 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
                           name="childAge"
                           value={formData.childAge}
                           onChange={handleInputChange}
-                          className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors"
+                          className={`w-full pl-10 pr-4 py-3 rounded-lg placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors ${
+                            isDark
+                              ? 'bg-white/10 border border-white/20 text-white'
+                              : 'bg-gray-50 border border-gray-300 text-gray-900'
+                          }`}
                           placeholder="Age in years"
                           min="6"
                           max="16"
@@ -179,7 +207,7 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
 
                     <div>
                       <label className={`block text-sm font-medium mb-2 ${
-                        isDark ? 'text-gray-300' : 'text-gray-700'
+                        isDark ? 'text-gray-300' : 'text-gray-900'
                       }`}>
                         Preferred Subject
                       </label>
@@ -187,21 +215,29 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
                         name="subject"
                         value={formData.subject}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                        className={`w-full px-4 py-3 rounded-lg focus:outline-none focus:border-violet-500 transition-colors ${
+                          isDark
+                            ? 'bg-white/10 border border-white/20 text-white'
+                            : 'bg-gray-50 border border-gray-300 text-gray-900'
+                        }`}
                         required
                       >
-                        <option value="" className="bg-gray-800">Select a subject</option>
-                        <option value="coding" className="bg-gray-800">Coding</option>
-                        <option value="math" className="bg-gray-800">Mathematics</option>
-                        <option value="science" className="bg-gray-800">Science</option>
-                        <option value="english" className="bg-gray-800">English</option>
-                        <option value="ai" className="bg-gray-800">Artificial Intelligence</option>
+                        <option value="" className={isDark ? 'bg-gray-800' : 'bg-white'}>Select a subject</option>
+                        <option value="coding" className={isDark ? 'bg-gray-800' : 'bg-white'}>Coding</option>
+                        <option value="math" className={isDark ? 'bg-gray-800' : 'bg-white'}>Mathematics</option>
+                        <option value="science" className={isDark ? 'bg-gray-800' : 'bg-white'}>Science</option>
+                        <option value="english" className={isDark ? 'bg-gray-800' : 'bg-white'}>English</option>
+                        <option value="ai" className={isDark ? 'bg-gray-800' : 'bg-white'}>Artificial Intelligence</option>
                       </select>
                     </div>
 
                     <motion.button
                       type="submit"
-                      className="w-full btn-primary text-lg py-4"
+                      className={`w-full text-lg py-4 rounded-lg font-semibold transition-all duration-300 ${
+                        isDark
+                          ? 'bg-gradient-to-r from-violet-500 to-purple-500 text-white hover:from-violet-600 hover:to-purple-600'
+                          : 'bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:from-violet-700 hover:to-purple-700'
+                      }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
