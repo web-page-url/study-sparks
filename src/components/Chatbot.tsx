@@ -12,7 +12,11 @@ interface Message {
   timestamp: Date;
 }
 
-export default function Chatbot() {
+interface ChatbotProps {
+  isDark?: boolean;
+}
+
+export default function Chatbot({ isDark = false }: ChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {

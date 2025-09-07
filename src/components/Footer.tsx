@@ -3,9 +3,17 @@
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Phone } from 'lucide-react';
 
-export default function Footer() {
+interface FooterProps {
+  isDark?: boolean;
+}
+
+export default function Footer({ isDark = false }: FooterProps) {
   return (
-    <footer className="bg-gray-900 border-t border-white/10">
+    <footer className={`transition-all duration-500 ${
+      isDark
+        ? 'bg-gray-900 border-t border-white/10'
+        : 'bg-violet-100 border-t border-violet-200'
+    }`}>
       <div className="max-w-6xl mx-auto px-6 py-16">
         {/* Main footer content */}
         <div className="grid md:grid-cols-4 gap-8 mb-12">
@@ -21,16 +29,24 @@ export default function Footer() {
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
                 <span className="text-2xl">🚀</span>
               </div>
-              <h3 className="text-2xl font-bold neon-text">Study Sparks</h3>
+              <h3 className={`text-2xl font-bold ${
+                isDark ? 'neon-text' : 'text-gray-800'
+              }`}>Study Sparks</h3>
             </div>
-            <p className="text-gray-300 mb-6 max-w-md">
+            <p className={`mb-6 max-w-md ${
+              isDark ? 'text-gray-300' : 'text-gray-600'
+            }`}>
               Making world-class education accessible, engaging, and fun for every child.
               Join thousands of students learning Coding, Math, Science, English, and AI.
             </p>
             <div className="flex gap-4">
               <motion.a
                 href="#"
-                className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors"
+                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
+                  isDark
+                    ? 'bg-white/10 hover:bg-white/20'
+                    : 'bg-violet-100 hover:bg-violet-200 text-gray-700'
+                }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -38,7 +54,11 @@ export default function Footer() {
               </motion.a>
               <motion.a
                 href="#"
-                className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors"
+                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
+                  isDark
+                    ? 'bg-white/10 hover:bg-white/20'
+                    : 'bg-violet-100 hover:bg-violet-200 text-gray-700'
+                }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -46,7 +66,11 @@ export default function Footer() {
               </motion.a>
               <motion.a
                 href="#"
-                className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors"
+                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
+                  isDark
+                    ? 'bg-white/10 hover:bg-white/20'
+                    : 'bg-violet-100 hover:bg-violet-200 text-gray-700'
+                }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -54,7 +78,11 @@ export default function Footer() {
               </motion.a>
               <motion.a
                 href="#"
-                className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors"
+                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
+                  isDark
+                    ? 'bg-white/10 hover:bg-white/20'
+                    : 'bg-violet-100 hover:bg-violet-200 text-gray-700'
+                }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -70,7 +98,9 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-lg font-bold text-white mb-4">Quick Links</h4>
+            <h4 className={`text-lg font-bold mb-4 ${
+              isDark ? 'text-white' : 'text-gray-800'
+            }`}>Quick Links</h4>
             <ul className="space-y-3">
               {[
                 { name: "About Us", href: "#" },
@@ -82,7 +112,11 @@ export default function Footer() {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors"
+                    className={`transition-colors ${
+                      isDark
+                        ? 'text-gray-300 hover:text-white'
+                        : 'text-gray-600 hover:text-gray-800'
+                    }`}
                   >
                     {link.name}
                   </a>
@@ -98,7 +132,9 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-lg font-bold text-white mb-4">Support</h4>
+            <h4 className={`text-lg font-bold mb-4 ${
+              isDark ? 'text-white' : 'text-gray-800'
+            }`}>Support</h4>
             <ul className="space-y-3">
               {[
                 { name: "Help Center", href: "#" },
@@ -110,7 +146,11 @@ export default function Footer() {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors"
+                    className={`transition-colors ${
+                      isDark
+                        ? 'text-gray-300 hover:text-white'
+                        : 'text-gray-600 hover:text-gray-800'
+                    }`}
                   >
                     {link.name}
                   </a>
@@ -122,22 +162,32 @@ export default function Footer() {
 
         {/* Newsletter */}
         <motion.div
-          className="border-t border-white/10 pt-8 mb-8"
+          className={`pt-8 mb-8 ${
+            isDark ? 'border-t border-white/10' : 'border-t border-violet-200'
+          }`}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
         >
           <div className="max-w-md">
-            <h4 className="text-lg font-bold text-white mb-4">Stay Updated</h4>
-            <p className="text-gray-300 mb-4">
+            <h4 className={`text-lg font-bold mb-4 ${
+              isDark ? 'text-white' : 'text-gray-800'
+            }`}>Stay Updated</h4>
+            <p className={`mb-4 ${
+              isDark ? 'text-gray-300' : 'text-gray-600'
+            }`}>
               Get the latest updates on new features and learning resources.
             </p>
             <div className="flex gap-2">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors"
+                className={`flex-1 px-4 py-2 rounded-lg transition-colors ${
+                  isDark
+                    ? 'bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500'
+                    : 'bg-white border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-violet-500'
+                }`}
               />
               <motion.button
                 className="btn-primary px-6 py-2"
@@ -159,38 +209,66 @@ export default function Footer() {
           viewport={{ once: true }}
         >
           <div className="flex items-center gap-3">
-            <Mail className="w-5 h-5 text-blue-400" />
-            <span className="text-gray-300">hello@studysparks.com</span>
+            <Mail className={`w-5 h-5 ${
+              isDark ? 'text-blue-400' : 'text-blue-600'
+            }`} />
+            <span className={`${
+              isDark ? 'text-gray-300' : 'text-gray-600'
+            }`}>hello@studysparks.com</span>
           </div>
           <div className="flex items-center gap-3">
-            <Phone className="w-5 h-5 text-green-400" />
-            <span className="text-gray-300">+91 98765 43210</span>
+            <Phone className={`w-5 h-5 ${
+              isDark ? 'text-green-400' : 'text-green-600'
+            }`} />
+            <span className={`${
+              isDark ? 'text-gray-300' : 'text-gray-600'
+            }`}>+91 98765 43210</span>
           </div>
           <div className="flex items-center gap-3">
-            <MapPin className="w-5 h-5 text-purple-400" />
-            <span className="text-gray-300">Mumbai, India</span>
+            <MapPin className={`w-5 h-5 ${
+              isDark ? 'text-purple-400' : 'text-purple-600'
+            }`} />
+            <span className={`${
+              isDark ? 'text-gray-300' : 'text-gray-600'
+            }`}>Mumbai, India</span>
           </div>
         </motion.div>
 
         {/* Bottom bar */}
         <motion.div
-          className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+          className={`pt-8 flex flex-col md:flex-row justify-between items-center gap-4 ${
+            isDark ? 'border-t border-white/10' : 'border-t border-violet-200'
+          }`}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           viewport={{ once: true }}
         >
-          <p className="text-gray-400 text-sm">
+          <p className={`text-sm ${
+            isDark ? 'text-gray-400' : 'text-gray-600'
+          }`}>
             © 2025 Study Sparks. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="#" className={`transition-colors ${
+              isDark
+                ? 'text-gray-400 hover:text-white'
+                : 'text-gray-600 hover:text-gray-800'
+            }`}>
               Privacy Policy
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="#" className={`transition-colors ${
+              isDark
+                ? 'text-gray-400 hover:text-white'
+                : 'text-gray-600 hover:text-gray-800'
+            }`}>
               Terms of Service
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="#" className={`transition-colors ${
+              isDark
+                ? 'text-gray-400 hover:text-white'
+                : 'text-gray-600 hover:text-gray-800'
+            }`}>
               Cookie Policy
             </a>
           </div>

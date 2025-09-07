@@ -11,7 +11,11 @@ const testimonials = [
   { text: "The live classes with expert teachers are amazing. My math grades improved dramatically!", author: "Sneha, Age 10", role: "Student", avatar: "👧" }
 ];
 
-export default function Testimonials() {
+interface TestimonialsProps {
+  isDark?: boolean;
+}
+
+export default function Testimonials({ isDark = false }: TestimonialsProps) {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
@@ -42,7 +46,9 @@ export default function Testimonials() {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 neon-text">
             What Our Community Says
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className={`text-xl max-w-2xl mx-auto ${
+            isDark ? 'text-gray-300' : 'text-gray-700'
+          }`}>
             Real stories from students and parents who trust Study Sparks
           </p>
         </motion.div>
@@ -63,7 +69,9 @@ export default function Testimonials() {
                     <Star key={i} className="w-6 h-6 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <blockquote className="text-xl md:text-2xl text-gray-300 mb-8 italic">
+                <blockquote className={`text-xl md:text-2xl mb-8 italic ${
+                  isDark ? 'text-gray-300' : 'text-gray-700'
+                }`}>
                   "{testimonials[activeTestimonial].text}"
                 </blockquote>
                 <div className="flex items-center justify-center gap-4">

@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 
-export default function ScrollToTop() {
+interface ScrollToTopProps {
+  isDark?: boolean;
+}
+
+export default function ScrollToTop({ isDark = false }: ScrollToTopProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

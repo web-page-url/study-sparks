@@ -2,6 +2,8 @@
 export { default as Hero } from './Hero';
 export { default as Features } from './Features';
 export { default as About } from './About';
+export { default as MeetTeachers } from './MeetTeachers';
+export { default as ThemeToggle } from './ThemeToggle';
 export { default as Subjects } from './Subjects';
 export { default as LiveClasses } from './LiveClasses';
 export { default as Community } from './Community';

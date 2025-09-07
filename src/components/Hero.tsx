@@ -5,16 +5,25 @@ import { ChevronDown, Sparkles, Zap, BookOpen } from 'lucide-react';
 
 interface HeroProps {
   onDemoClick: () => void;
+  isDark?: boolean;
 }
 
-export default function Hero({ onDemoClick }: HeroProps) {
+export default function Hero({ onDemoClick, isDark = false }: HeroProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Enhanced Animated Background - Violet Theme */}
-      <div className="absolute inset-0 bg-gradient-to-br from-violet-900 via-purple-900 via-indigo-900 to-purple-800">
+      <div className={`absolute inset-0 transition-all duration-500 ${
+        isDark
+          ? 'bg-gradient-to-br from-violet-900 via-purple-900 via-indigo-900 to-purple-800'
+          : 'bg-gradient-to-br from-violet-50 via-purple-50 via-indigo-50 to-purple-100'
+      }`}>
         {/* Dynamic gradient overlay */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-violet-400/15 via-purple-400/15 to-indigo-400/15"
+          className={`absolute inset-0 ${
+            isDark
+              ? 'bg-gradient-to-r from-violet-400/15 via-purple-400/15 to-indigo-400/15'
+              : 'bg-gradient-to-r from-violet-200/20 via-purple-200/20 to-indigo-200/20'
+          }`}
           animate={{
             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
           }}
@@ -30,7 +39,9 @@ export default function Hero({ onDemoClick }: HeroProps) {
 
         {/* Floating Geometric Shapes - Violet Theme */}
         <motion.div
-          className="absolute top-20 left-10 w-32 h-32 border-2 border-violet-400/40 rounded-full"
+          className={`absolute top-20 left-10 w-32 h-32 border-2 rounded-full ${
+            isDark ? 'border-violet-400/40' : 'border-violet-300/60'
+          }`}
           animate={{
             scale: [1, 1.2, 1],
             rotate: [0, 180, 360],
@@ -43,7 +54,9 @@ export default function Hero({ onDemoClick }: HeroProps) {
           }}
         />
         <motion.div
-          className="absolute top-32 right-20 w-24 h-24 border-2 border-purple-400/40 rounded-lg rotate-45"
+          className={`absolute top-32 right-20 w-24 h-24 border-2 rounded-lg rotate-45 ${
+            isDark ? 'border-purple-400/40' : 'border-purple-300/60'
+          }`}
           animate={{
             scale: [1, 1.3, 1],
             rotate: [45, 135, 225, 315, 45],
@@ -56,7 +69,11 @@ export default function Hero({ onDemoClick }: HeroProps) {
           }}
         />
         <motion.div
-          className="absolute bottom-40 left-20 w-20 h-20 bg-gradient-to-r from-violet-500/25 to-purple-500/25 rounded-full blur-xl"
+          className={`absolute bottom-40 left-20 w-20 h-20 rounded-full blur-xl ${
+            isDark
+              ? 'bg-gradient-to-r from-violet-500/25 to-purple-500/25'
+              : 'bg-gradient-to-r from-violet-300/30 to-purple-300/30'
+          }`}
           animate={{
             scale: [1, 1.5, 1],
             y: [0, -30, 0],
@@ -194,12 +211,20 @@ export default function Hero({ onDemoClick }: HeroProps) {
           transition={{ duration: 0.8 }}
         >
           <motion.h1
-            className="text-6xl md:text-8xl font-black mb-2 bg-gradient-to-r from-white via-violet-200 to-purple-200 bg-clip-text text-transparent leading-tight"
+            className={`text-6xl md:text-8xl font-black mb-2 leading-tight ${
+              isDark
+                ? 'bg-gradient-to-r from-white via-violet-200 to-purple-200 bg-clip-text text-transparent'
+                : 'bg-gradient-to-r from-violet-800 via-purple-800 to-indigo-800 bg-clip-text text-transparent'
+            }`}
             animate={{
-              textShadow: [
+              textShadow: isDark ? [
                 "0 0 20px rgba(139, 92, 246, 0.5)",
                 "0 0 40px rgba(147, 51, 234, 0.5)",
                 "0 0 20px rgba(139, 92, 246, 0.5)"
+              ] : [
+                "0 0 10px rgba(139, 92, 246, 0.3)",
+                "0 0 20px rgba(147, 51, 234, 0.3)",
+                "0 0 10px rgba(139, 92, 246, 0.3)"
               ]
             }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -209,7 +234,11 @@ export default function Hero({ onDemoClick }: HeroProps) {
 
           {/* Decorative underline */}
           <motion.div
-            className="w-32 h-1 bg-gradient-to-r from-violet-400 to-purple-400 mx-auto rounded-full"
+            className={`w-32 h-1 mx-auto rounded-full ${
+              isDark
+                ? 'bg-gradient-to-r from-violet-400 to-purple-400'
+                : 'bg-gradient-to-r from-violet-600 to-purple-600'
+            }`}
             initial={{ width: 0 }}
             animate={{ width: 128 }}
             transition={{ duration: 1, delay: 0.5 }}
@@ -224,12 +253,18 @@ export default function Hero({ onDemoClick }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.p
-            className="text-xl md:text-3xl mb-6 text-gray-200 max-w-4xl mx-auto leading-relaxed font-light"
+            className={`text-xl md:text-3xl mb-6 max-w-4xl mx-auto leading-relaxed font-light ${
+              isDark ? 'text-gray-200' : 'text-gray-700'
+            }`}
             animate={{
-              textShadow: [
+              textShadow: isDark ? [
                 "0 0 10px rgba(255, 255, 255, 0.1)",
                 "0 0 20px rgba(255, 255, 255, 0.2)",
                 "0 0 10px rgba(255, 255, 255, 0.1)"
+              ] : [
+                "0 0 5px rgba(139, 92, 246, 0.1)",
+                "0 0 10px rgba(147, 51, 234, 0.15)",
+                "0 0 5px rgba(139, 92, 246, 0.1)"
               ]
             }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -256,17 +291,23 @@ export default function Hero({ onDemoClick }: HeroProps) {
             ].map((feature, index) => (
               <motion.div
                 key={feature.text}
-                className="flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm rounded-full border border-white/10"
+                className={`flex items-center gap-2 px-4 py-2 backdrop-blur-sm rounded-full border ${
+                  isDark
+                    ? 'bg-white/5 border-white/10'
+                    : 'bg-violet-100/80 border-violet-200/50'
+                }`}
                 whileHover={{
                   scale: 1.05,
-                  backgroundColor: "rgba(255, 255, 255, 0.1)"
+                  backgroundColor: isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(139, 92, 246, 0.1)"
                 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 + index * 0.1 }}
               >
                 <span className="text-lg">{feature.emoji}</span>
-                <span className="text-sm font-medium text-gray-200">{feature.text}</span>
+                <span className={`text-sm font-medium ${
+                  isDark ? 'text-gray-200' : 'text-gray-700'
+                }`}>{feature.text}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -280,14 +321,22 @@ export default function Hero({ onDemoClick }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.7 }}
         >
           <motion.button
-            className="group relative btn-primary text-xl px-10 py-5 font-semibold overflow-hidden"
+            className={`group relative text-xl px-10 py-5 font-semibold overflow-hidden rounded-2xl ${
+              isDark
+                ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white'
+                : 'bg-gradient-to-r from-violet-500 to-purple-500 text-white'
+            }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onDemoClick}
           >
             {/* Animated background gradient - Violet Theme */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                isDark
+                  ? 'bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500'
+                  : 'bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600'
+              }`}
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
               }}
@@ -307,8 +356,15 @@ export default function Hero({ onDemoClick }: HeroProps) {
           </motion.button>
 
           <motion.button
-            className="group btn-secondary text-xl px-10 py-5 font-semibold border-2 border-white/30 hover:border-white/50 transition-all duration-300"
-            whileHover={{ scale: 1.05, borderColor: "rgba(255, 255, 255, 0.8)" }}
+            className={`group text-xl px-10 py-5 font-semibold rounded-2xl border-2 transition-all duration-300 ${
+              isDark
+                ? 'border-white/30 hover:border-white/50 text-white'
+                : 'border-violet-300 hover:border-violet-400 text-violet-700 bg-white/80'
+            }`}
+            whileHover={{
+              scale: 1.05,
+              borderColor: isDark ? "rgba(255, 255, 255, 0.8)" : "rgba(139, 92, 246, 0.8)"
+            }}
             whileTap={{ scale: 0.95 }}
             onClick={onDemoClick}
           >
@@ -316,7 +372,9 @@ export default function Hero({ onDemoClick }: HeroProps) {
               <Zap className="w-6 h-6" />
               Book a Free Demo
               <motion.div
-                className="w-2 h-2 bg-green-400 rounded-full"
+                className={`w-2 h-2 rounded-full ${
+                  isDark ? 'bg-green-400' : 'bg-green-500'
+                }`}
                 animate={{ opacity: [1, 0.3, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               />
@@ -326,7 +384,9 @@ export default function Hero({ onDemoClick }: HeroProps) {
 
         {/* Trust indicators - Violet Theme */}
         <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 text-gray-400"
+          className={`flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 ${
+            isDark ? 'text-gray-400' : 'text-gray-600'
+          }`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
@@ -362,19 +422,29 @@ export default function Hero({ onDemoClick }: HeroProps) {
         transition={{ duration: 0.8, delay: 1.2 }}
       >
         <motion.div
-          className="text-xs text-gray-400 font-medium"
+          className={`text-xs font-medium ${
+            isDark ? 'text-gray-400' : 'text-gray-600'
+          }`}
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
           Scroll to explore
         </motion.div>
         <motion.div
-          className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
-          animate={{ borderColor: ["rgba(255,255,255,0.3)", "rgba(255,255,255,0.8)", "rgba(255,255,255,0.3)"] }}
+          className={`w-6 h-10 border-2 rounded-full flex justify-center ${
+            isDark ? 'border-white/30' : 'border-violet-300/50'
+          }`}
+          animate={{
+            borderColor: isDark
+              ? ["rgba(255,255,255,0.3)", "rgba(255,255,255,0.8)", "rgba(255,255,255,0.3)"]
+              : ["rgba(139,92,246,0.3)", "rgba(139,92,246,0.8)", "rgba(139,92,246,0.3)"]
+          }}
           transition={{ duration: 2, repeat: Infinity }}
         >
           <motion.div
-            className="w-1 h-3 bg-white/80 rounded-full mt-2"
+            className={`w-1 h-3 rounded-full mt-2 ${
+              isDark ? 'bg-white/80' : 'bg-violet-500'
+            }`}
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />

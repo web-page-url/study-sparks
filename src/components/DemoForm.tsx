@@ -7,9 +7,10 @@ import { X, User, Mail, Phone, Calendar, CheckCircle } from 'lucide-react';
 interface DemoFormProps {
   isOpen: boolean;
   onClose: () => void;
+  isDark?: boolean;
 }
 
-export default function DemoForm({ isOpen, onClose }: DemoFormProps) {
+export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -85,13 +86,19 @@ export default function DemoForm({ isOpen, onClose }: DemoFormProps) {
                   exit={{ opacity: 0 }}
                 >
                   <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold mb-2 neon-text">Book a Free Demo</h2>
-                    <p className="text-gray-300">Experience our learning platform firsthand</p>
+                    <h2 className={`text-3xl font-bold mb-2 ${
+                      isDark ? 'neon-text' : 'text-gray-800'
+                    }`}>Book a Free Demo</h2>
+                    <p className={`${
+                      isDark ? 'text-gray-300' : 'text-gray-600'
+                    }`}>Experience our learning platform firsthand</p>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className={`block text-sm font-medium mb-2 ${
+                        isDark ? 'text-gray-300' : 'text-gray-700'
+                      }`}>
                         Full Name
                       </label>
                       <div className="relative">
@@ -109,7 +116,9 @@ export default function DemoForm({ isOpen, onClose }: DemoFormProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className={`block text-sm font-medium mb-2 ${
+                        isDark ? 'text-gray-300' : 'text-gray-700'
+                      }`}>
                         Email Address
                       </label>
                       <div className="relative">
@@ -127,7 +136,9 @@ export default function DemoForm({ isOpen, onClose }: DemoFormProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className={`block text-sm font-medium mb-2 ${
+                        isDark ? 'text-gray-300' : 'text-gray-700'
+                      }`}>
                         Phone Number
                       </label>
                       <div className="relative">
@@ -145,7 +156,9 @@ export default function DemoForm({ isOpen, onClose }: DemoFormProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className={`block text-sm font-medium mb-2 ${
+                        isDark ? 'text-gray-300' : 'text-gray-700'
+                      }`}>
                         Child's Age
                       </label>
                       <div className="relative">
@@ -165,7 +178,9 @@ export default function DemoForm({ isOpen, onClose }: DemoFormProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className={`block text-sm font-medium mb-2 ${
+                        isDark ? 'text-gray-300' : 'text-gray-700'
+                      }`}>
                         Preferred Subject
                       </label>
                       <select
@@ -210,8 +225,12 @@ export default function DemoForm({ isOpen, onClose }: DemoFormProps) {
                   >
                     <CheckCircle className="w-8 h-8 text-white" />
                   </motion.div>
-                  <h3 className="text-2xl font-bold mb-2 text-white">Thank You!</h3>
-                  <p className="text-gray-300">We'll contact you soon to schedule your demo class.</p>
+                  <h3 className={`text-2xl font-bold mb-2 ${
+                    isDark ? 'text-white' : 'text-gray-800'
+                  }`}>Thank You!</h3>
+                  <p className={`${
+                    isDark ? 'text-gray-300' : 'text-gray-600'
+                  }`}>We'll contact you soon to schedule your demo class.</p>
                 </motion.div>
               )}
             </AnimatePresence>

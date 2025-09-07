@@ -46,16 +46,26 @@ const features = [
   }
 ];
 
-export default function Features() {
+interface FeaturesProps {
+  isDark?: boolean;
+}
+
+export default function Features({ isDark = false }: FeaturesProps) {
   return (
-    <section className="py-24 px-6 relative overflow-hidden">
-      {/* Background decoration - Violet Theme */}
-      <div className="absolute inset-0 bg-gradient-to-b from-violet-900/20 via-gray-900/50 to-black" />
+    <section className={`py-24 px-6 relative overflow-hidden ${
+      isDark
+        ? 'bg-gradient-to-b from-violet-900/20 via-gray-900/50 to-black'
+        : 'bg-gradient-to-b from-violet-50/30 via-purple-50/20 to-gray-50'
+    }`}>
       <div className="absolute inset-0">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full"
+            className={`absolute w-1 h-1 rounded-full ${
+              isDark
+                ? 'bg-gradient-to-r from-violet-400 to-purple-400'
+                : 'bg-gradient-to-r from-violet-300 to-purple-300'
+            }`}
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -84,18 +94,28 @@ export default function Features() {
           viewport={{ once: true }}
         >
           <motion.div
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 backdrop-blur-sm rounded-full border border-white/10 mb-6"
+            className={`inline-flex items-center gap-2 px-6 py-3 backdrop-blur-sm rounded-full border mb-6 ${
+              isDark
+                ? 'bg-white/5 border-white/10'
+                : 'bg-violet-100/80 border-violet-200/50'
+            }`}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
             <Star className="w-5 h-5 text-yellow-400" />
-            <span className="text-sm font-medium text-gray-300">Trusted by 50K+ Students</span>
+            <span className={`text-sm font-medium ${
+              isDark ? 'text-gray-300' : 'text-gray-700'
+            }`}>Trusted by 50K+ Students</span>
           </motion.div>
 
           <motion.h2
-            className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-violet-200 to-purple-200 bg-clip-text text-transparent"
+            className={`text-5xl md:text-6xl font-bold mb-6 ${
+              isDark
+                ? 'bg-gradient-to-r from-white via-violet-200 to-purple-200 bg-clip-text text-transparent'
+                : 'bg-gradient-to-r from-violet-800 via-purple-800 to-indigo-800 bg-clip-text text-transparent'
+            }`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -105,7 +125,9 @@ export default function Features() {
           </motion.h2>
 
           <motion.p
-            className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            className={`text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed ${
+              isDark ? 'text-gray-300' : 'text-gray-700'
+            }`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -128,7 +150,11 @@ export default function Features() {
             >
               {/* Card Container with Enhanced Effects */}
               <motion.div
-                className="card-glass p-8 text-center relative overflow-hidden h-full"
+                className={`p-8 text-center relative overflow-hidden h-full rounded-3xl border transition-all duration-300 ${
+                  isDark
+                    ? 'bg-gray-800/80 backdrop-blur-lg border-gray-700/50'
+                    : 'bg-white/90 backdrop-blur-lg border-gray-200/50 shadow-xl'
+                }`}
                 whileHover={{
                   scale: 1.03,
                   boxShadow: "0 25px 50px rgba(0, 212, 255, 0.15), 0 0 40px rgba(147, 51, 234, 0.1)"
@@ -184,7 +210,11 @@ export default function Features() {
 
                 {/* Content */}
                 <motion.h3
-                  className="text-2xl font-bold mb-4 text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-200 group-hover:bg-clip-text transition-all duration-300"
+                  className={`text-2xl font-bold mb-4 transition-all duration-300 ${
+                    isDark
+                      ? 'text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-200 group-hover:bg-clip-text'
+                      : 'text-gray-800 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-800 group-hover:to-purple-800 group-hover:bg-clip-text'
+                  }`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -194,7 +224,11 @@ export default function Features() {
                 </motion.h3>
 
                 <motion.p
-                  className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300"
+                  className={`leading-relaxed transition-colors duration-300 ${
+                    isDark
+                      ? 'text-gray-300 group-hover:text-gray-200'
+                      : 'text-gray-600 group-hover:text-gray-700'
+                  }`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
@@ -234,7 +268,9 @@ export default function Features() {
               animate={{ opacity: [1, 0.3, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
-            <span className="text-gray-300 font-medium">Join 50K+ students learning with Study Sparks</span>
+            <span className={`font-medium ${
+              isDark ? 'text-gray-300' : 'text-gray-700'
+            }`}>Join 50K+ students learning with Study Sparks</span>
           </motion.div>
         </motion.div>
       </div>
