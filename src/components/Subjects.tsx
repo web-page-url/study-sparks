@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Code, Calculator, Atom, BookOpen, Brain, Rocket, Target } from 'lucide-react';
 
@@ -228,7 +229,10 @@ export default function Subjects({ isDark = false }: SubjectsProps) {
                     }}
                     transition={{ duration: 0.5 }}
                   >
-                    <subject.icon className="w-8 h-8 text-white" />
+                    {(() => {
+                      const IconComponent = subject.icon;
+                      return <IconComponent className="w-8 h-8 text-white" />;
+                    })()}
                   </motion.div>
 
                   {/* Glow effect */}

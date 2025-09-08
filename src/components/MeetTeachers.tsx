@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Award, BookOpen, Users, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
@@ -167,7 +168,10 @@ const MeetTeachers = ({ isDark = false }: MeetTeachersProps) => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className={`w-12 h-12 mx-auto mb-4 bg-gradient-to-r ${stat.color} rounded-full flex items-center justify-center`}>
-                <stat.icon className="w-6 h-6 text-white" />
+                {(() => {
+                  const IconComponent = stat.icon;
+                  return <IconComponent className="w-6 h-6 text-white" />;
+                })()}
               </div>
               <div className={`text-2xl font-bold mb-1 ${
                 isDark ? 'text-white' : 'text-gray-800'

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { WebsiteStructuredData, OrganizationStructuredData } from "@/components/StructuredData";
+import { Analytics, WebVitals, ErrorTracking } from "@/components/Analytics";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -88,9 +91,20 @@ export default function RootLayout({
         className={`${poppins.variable} ${inter.variable} font-poppins antialiased bg-black text-white overflow-x-hidden`}
         suppressHydrationWarning={true}
       >
-        <div className="relative min-h-screen">
-          {children}
-        </div>
+        <ErrorBoundary>
+          <div className="relative min-h-screen">
+            {children}
+          </div>
+        </ErrorBoundary>
+
+        {/* Analytics and Performance Monitoring */}
+        <Analytics />
+        <WebVitals />
+        <ErrorTracking />
+
+        {/* Structured Data for SEO */}
+        <WebsiteStructuredData />
+        <OrganizationStructuredData />
       </body>
     </html>
   );

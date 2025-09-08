@@ -71,7 +71,7 @@ export default function Home() {
       {/* Page Sections */}
       <Hero onDemoClick={handleDemoClick} isDark={isDark} />
       <Features isDark={isDark} />
-      <About isDark={isDark} />
+      {/* <About isDark={isDark} /> */}
       <MeetTeachers isDark={isDark} />
       <Subjects isDark={isDark} />
       <LiveClasses isDark={isDark} />

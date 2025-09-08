@@ -148,8 +148,9 @@ User query: ${prompt}`;
             rotate: isOpen ? 180 : 0,
           }}
           transition={{ duration: 0.3 }}
+          aria-label="Close StudyBot chat"
         >
-          <X className="w-4 h-4 mx-auto" />
+          <X className="w-4 h-4 mx-auto" aria-hidden="true" />
         </motion.button>
 
         {/* Main Chat Button */}
@@ -161,6 +162,7 @@ User query: ${prompt}`;
             setIsOpen(true);
             setIsMinimized(false); // Reset minimized state when opening
           }}
+          aria-label="Open StudyBot chat assistant"
           whileHover={{
             scale: 1.1,
             boxShadow: "0 20px 40px rgba(139, 92, 246, 0.6), 0 0 20px rgba(236, 72, 153, 0.4)"

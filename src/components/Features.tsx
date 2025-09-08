@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Smartphone, Sparkles, Award, Brain, Users, Star } from 'lucide-react';
 
@@ -197,7 +198,10 @@ export default function Features({ isDark = false }: FeaturesProps) {
                     }}
                     transition={{ duration: 0.5 }}
                   >
-                    <feature.icon className="w-10 h-10 text-white" />
+                    {(() => {
+                      const IconComponent = feature.icon;
+                      return <IconComponent className="w-10 h-10 text-white" />;
+                    })()}
                   </motion.div>
 
                   {/* Glow effect */}

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Phone } from 'lucide-react';
+import Link from 'next/link';
 
 interface FooterProps {
   isDark?: boolean;
@@ -103,14 +104,14 @@ export default function Footer({ isDark = false }: FooterProps) {
             }`}>Quick Links</h4>
             <ul className="space-y-3">
               {[
-                { name: "About Us", href: "#" },
-                { name: "Our Teachers", href: "#" },
-                { name: "Subjects", href: "#" },
-                { name: "Live Classes", href: "#" },
-                { name: "Community", href: "#" }
+                { name: "About Us", href: "/about" },
+                { name: "Our Teachers", href: "/teachers" },
+                { name: "Subjects", href: "/subjects" },
+                { name: "Live Classes", href: "/live-classes" },
+                { name: "Community", href: "/community" }
               ].map((link) => (
                 <li key={link.name}>
-                  <a
+                  <Link
                     href={link.href}
                     className={`transition-colors ${
                       isDark
@@ -119,7 +120,7 @@ export default function Footer({ isDark = false }: FooterProps) {
                     }`}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -137,14 +138,14 @@ export default function Footer({ isDark = false }: FooterProps) {
             }`}>Support</h4>
             <ul className="space-y-3">
               {[
-                { name: "Help Center", href: "#" },
-                { name: "Contact Us", href: "#" },
-                { name: "Privacy Policy", href: "#" },
-                { name: "Terms of Service", href: "#" },
-                { name: "Careers", href: "#" }
+                { name: "Help Center", href: "/help" },
+                { name: "Contact Us", href: "/contact" },
+                { name: "Privacy Policy", href: "/privacy" },
+                { name: "Terms of Service", href: "/terms" },
+                { name: "Careers", href: "/careers" }
               ].map((link) => (
                 <li key={link.name}>
-                  <a
+                  <Link
                     href={link.href}
                     className={`transition-colors ${
                       isDark
@@ -153,7 +154,7 @@ export default function Footer({ isDark = false }: FooterProps) {
                     }`}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -250,20 +251,20 @@ export default function Footer({ isDark = false }: FooterProps) {
             © 2025 Study Sparks. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm">
-            <a href="#" className={`transition-colors ${
+            <Link href="/privacy" className={`transition-colors ${
               isDark
                 ? 'text-gray-400 hover:text-white'
                 : 'text-gray-600 hover:text-gray-800'
             }`}>
               Privacy Policy
-            </a>
-            <a href="#" className={`transition-colors ${
+            </Link>
+            <Link href="/terms" className={`transition-colors ${
               isDark
                 ? 'text-gray-400 hover:text-white'
                 : 'text-gray-600 hover:text-gray-800'
             }`}>
               Terms of Service
-            </a>
+            </Link>
             <a href="#" className={`transition-colors ${
               isDark
                 ? 'text-gray-400 hover:text-white'
