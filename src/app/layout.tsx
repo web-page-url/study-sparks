@@ -93,7 +93,7 @@ export default function RootLayout({
         className={`${poppins.variable} ${inter.variable} font-poppins antialiased bg-black text-white overflow-x-hidden`}
         suppressHydrationWarning={true}
       >
-        {/* Progress Bar */}
+        {/* Progress Bar - positioned above navigation */}
         <CombinedProgressBar />
 
         {/* Navigation */}

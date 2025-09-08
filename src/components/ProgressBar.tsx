@@ -83,42 +83,56 @@ export function PageLoadProgressBar({ color = '#8b5cf6', height = 3 }: ProgressB
   );
 }
 
-export function CombinedProgressBar({ color = '#8b5cf6', height = 3 }: ProgressBarProps) {
+export function CombinedProgressBar({ color = '#8b5cf6', height = 4 }: ProgressBarProps) {
   const { scrollYProgress } = useScroll();
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 1000);
+    const timer = setTimeout(() => setIsLoading(false), 1200);
     return () => clearTimeout(timer);
   }, [pathname]);
 
-  const scrollScale = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.onChange((value) => {
+      // Ensure value is a valid number between 0 and 1
+      const clampedValue = Math.max(0, Math.min(1, Number.isFinite(value) ? value : 0));
+      setScrollProgress(clampedValue);
+    });
 
-  // Use page load progress when loading, otherwise use scroll progress
-  const scaleX = isLoading ? 0.9 : scrollScale;
+    // Set initial scroll progress
+    const initialValue = Math.max(0, Math.min(1, scrollYProgress.get() || 0));
+    setScrollProgress(initialValue);
+
+    return unsubscribe;
+  }, [scrollYProgress]);
+
+  // Use the scroll progress directly instead of useSpring to avoid NaN issues
+  const currentScale = isLoading ? 0.85 : Math.max(scrollProgress, 0.02); // Minimum 2% visibility
+
+  console.log('ProgressBar - isLoading:', isLoading, 'scrollProgress:', scrollProgress.toFixed(3), 'currentScale:', currentScale.toFixed(3));
+
+  // Fallback: always show at least 10% progress for testing
+  const displayScale = Math.max(currentScale, 0.1);
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 z-50 origin-left"
+      className="fixed top-0 left-0 right-0 z-[60] origin-left shadow-sm border-b border-white/10"
       style={{
-        scaleX,
         height,
-        backgroundColor: color,
+        background: `linear-gradient(90deg, ${color} 0%, ${color}DD 50%, ${color}BB 100%)`,
       }}
       animate={{
-        scaleX: isLoading ? 0.9 : scrollScale.get(),
+        scaleX: displayScale,
         backgroundColor: isLoading ? '#f59e0b' : color
       }}
       transition={{
-        scaleX: { duration: isLoading ? 0.8 : 0.3 },
-        backgroundColor: { duration: 0.3 }
+        scaleX: { duration: isLoading ? 1.2 : 0.2, ease: "easeOut" },
+        backgroundColor: { duration: 0.4 }
       }}
+      initial={{ scaleX: 0.1 }} // Start with 10% visibility for testing
     />
   );
 }
