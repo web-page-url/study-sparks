@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import Navigation from "@/components/Navigation";
+import CombinedProgressBar from "@/components/ProgressBar";
 import { WebsiteStructuredData, OrganizationStructuredData } from "@/components/StructuredData";
 import { Analytics, WebVitals, ErrorTracking } from "@/components/Analytics";
 
@@ -91,8 +93,14 @@ export default function RootLayout({
         className={`${poppins.variable} ${inter.variable} font-poppins antialiased bg-black text-white overflow-x-hidden`}
         suppressHydrationWarning={true}
       >
+        {/* Progress Bar */}
+        <CombinedProgressBar />
+
+        {/* Navigation */}
+        <Navigation />
+
         <ErrorBoundary>
-          <div className="relative min-h-screen">
+          <div className="relative min-h-screen pt-16">
             {children}
           </div>
         </ErrorBoundary>

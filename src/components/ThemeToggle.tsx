@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface ThemeToggleProps {
   isDark: boolean;
@@ -9,14 +10,42 @@ interface ThemeToggleProps {
 }
 
 const ThemeToggle = ({ isDark, onToggle }: ThemeToggleProps) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    const checkScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    checkMobile();
+    checkScroll();
+
+    window.addEventListener('resize', checkMobile);
+    window.addEventListener('scroll', checkScroll);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('scroll', checkScroll);
+    };
+  }, []);
+
   return (
     <motion.button
       onClick={onToggle}
-      className={`fixed top-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl backdrop-blur-md border-2 transition-all duration-300 ${
+      className={`fixed z-45 w-12 h-12 md:w-14 md:h-14 rounded-full shadow-xl backdrop-blur-md border-2 transition-all duration-300 ${
         isDark
           ? 'bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 border-white/20 text-white shadow-violet-500/25'
           : 'bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 border-violet-200 text-white shadow-violet-300/50'
       }`}
+      style={{
+        top: isMobile ? (isScrolled ? '5.5rem' : '5rem') : '1.5rem', // Only adjust mobile positioning, keep desktop original
+        right: isMobile ? '1rem' : '1.5rem',
+      }}
       whileHover={{
         scale: 1.1,
         boxShadow: isDark
@@ -44,7 +73,7 @@ const ThemeToggle = ({ isDark, onToggle }: ThemeToggleProps) => {
           transition={{ duration: 0.3 }}
           className="absolute"
         >
-          <Moon className="w-6 h-6" />
+          <Moon className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
         </motion.div>
 
         <motion.div
@@ -56,7 +85,7 @@ const ThemeToggle = ({ isDark, onToggle }: ThemeToggleProps) => {
           transition={{ duration: 0.3 }}
           className="absolute"
         >
-          <Sun className="w-6 h-6" />
+          <Sun className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
         </motion.div>
       </motion.div>
 
