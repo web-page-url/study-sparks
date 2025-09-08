@@ -34,10 +34,19 @@ const ThemeToggle = ({ isDark, onToggle }: ThemeToggleProps) => {
     };
   }, []);
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Theme toggle clicked, current theme:', isDark);
+    onToggle();
+  };
+
+  console.log('ThemeToggle rendering - isDark:', isDark, 'isMobile:', isMobile, 'isScrolled:', isScrolled);
+
   return (
     <motion.button
-      onClick={onToggle}
-      className={`fixed z-45 w-12 h-12 md:w-14 md:h-14 rounded-full shadow-xl backdrop-blur-md border-2 transition-all duration-300 ${
+      onClick={handleClick}
+      className={`fixed z-50 w-12 h-12 md:w-14 md:h-14 rounded-full shadow-xl backdrop-blur-md border-2 transition-all duration-300 cursor-pointer ${
         isDark
           ? 'bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 border-white/20 text-white shadow-violet-500/25'
           : 'bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 border-violet-200 text-white shadow-violet-300/50'
@@ -45,6 +54,7 @@ const ThemeToggle = ({ isDark, onToggle }: ThemeToggleProps) => {
       style={{
         top: isMobile ? (isScrolled ? '5.5rem' : '5rem') : '1.5rem', // Only adjust mobile positioning, keep desktop original
         right: isMobile ? '1rem' : '1.5rem',
+        pointerEvents: 'auto',
       }}
       whileHover={{
         scale: 1.1,
@@ -57,6 +67,7 @@ const ThemeToggle = ({ isDark, onToggle }: ThemeToggleProps) => {
         rotate: isDark ? 0 : 180,
       }}
       transition={{ duration: 0.3 }}
+      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
       <motion.div
         initial={false}
