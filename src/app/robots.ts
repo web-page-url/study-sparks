@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://studysparks.vercel.app/sitemap.xml',
+    sitemap: 'https://study-sparks.vercel.app/sitemap.xml',
   }
 }

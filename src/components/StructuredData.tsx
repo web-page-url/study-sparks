@@ -12,7 +12,7 @@ export function StructuredData({ type = 'website', data }: StructuredDataProps) 
     "name": "Study Sparks",
     "description": "Study Sparks makes learning fun for kids! Master Coding, Math, Science, English, and AI through interactive live classes, gamified learning, and personalized AI-powered education.",
     "url": "https://studysparks.vercel.app",
-    "logo": "https://studysparks.vercel.app/logo.png",
+    "logo": "https://study-sparks.vercel.app/logo.png",
     "sameAs": [
       "https://twitter.com/studysparks",
       "https://facebook.com/studysparks",
@@ -70,7 +70,7 @@ export function WebsiteStructuredData() {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://studysparks.vercel.app/search?q={search_term_string}"
+            "urlTemplate": "https://study-sparks.vercel.app/search?q={search_term_string}"
           },
           "query-input": "required name=search_term_string"
         },
@@ -79,7 +79,7 @@ export function WebsiteStructuredData() {
           "name": "Study Sparks",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://studysparks.vercel.app/logo.png"
+            "url": "https://study-sparks.vercel.app/logo.png"
           }
         }
       }}

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: "Study Sparks | Learn Coding, Math, Science, English & AI",
     template: "%s | Study Sparks"
   },
-  description: "Study Sparks makes learning fun for kids! Master Coding, Math, Science, English, and AI through interactive live classes, gamified learning, and personalized AI-powered education.",
+  description: "Study Sparks makes learning fun for Students! Master Coding, Math, Science, English, and AI through interactive live classes, gamified learning, and personalized Human + AI-powered education.",
   keywords: ["kids education", "coding for kids", "online learning", "math learning", "science education", "AI for kids", "interactive learning", "live classes", "educational platform", "children learning"],
   authors: [{ name: "Study Sparks Team" }],
   creator: "Study Sparks",
@@ -43,15 +43,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://studysparks.vercel.app",
-    title: "Study Sparks | Fun Learning Platform for Kids",
-    description: "Transform learning with Study Sparks! Interactive coding, math, science, and AI classes for kids. Gamified education with live teachers and AI-powered personalized learning.",
+    title: "Study Sparks | Fun Learning Platform for Students",
+    description: "Transform learning with Study Sparks! Interactive coding, math, science, and AI classes for Students. Gamified education with live teachers and AI-powered personalized learning.",
     siteName: "Study Sparks",
     images: [
       {
         url: "/study-spark-logo.png",
         width: 1200,
         height: 630,
-        alt: "Study Sparks - Making Learning Fun for Kids",
+        alt: "Study Sparks - Making Learning Fun for Students",
         type: "image/png",
       },
       {
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   // Enhanced Twitter Card for better Twitter previews
   twitter: {
     card: "summary_large_image",
-    title: "Study Sparks | Fun Learning for Kids",
+    title: "Study Sparks | Fun Learning for Students",
     description: "Transform your child's learning experience! Interactive coding, math, science, and AI classes with gamified education and live teachers.",
     images: ["/study-spark-logo.png"],
     creator: "@studysparks",
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     "og:image:type": "image/png",
 
     // LinkedIn specific
-    "og:image:secure_url": "https://studysparks.vercel.app/study-spark-logo.png",
+    "og:image:secure_url": "https://study-sparks.vercel.app/study-spark-logo.png",
 
     // Microsoft Teams specific
     "msapplication-TileImage": "/favicon-144x144.png",
@@ -167,13 +167,13 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.webmanifest" />
 
         {/* Additional Social Media Meta Tags */}
-        <meta property="og:image:secure_url" content="https://studysparks.vercel.app/study-spark-logo.png" />
+        <meta property="og:image:secure_url" content="https://study-sparks.vercel.app/study-spark-logo.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:type" content="image/png" />
 
         {/* WhatsApp specific */}
-        <meta property="og:image" content="https://studysparks.vercel.app/study-spark-logo.png" />
+        <meta property="og:image" content="https://study-sparks.vercel.app/study-spark-logo.png" />
 
         {/* LinkedIn specific */}
         <meta property="og:title" content="Study Sparks | Fun Learning Platform for Kids" />
