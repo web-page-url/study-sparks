@@ -21,6 +21,7 @@ import {
   GraduationCap,
   ChevronDown
 } from 'lucide-react';
+import PWAInstallButton from './PWAInstallButton';
 
 interface NavigationProps {
   isDark?: boolean;
@@ -62,7 +63,7 @@ export default function Navigation({ isDark = false }: NavigationProps) {
     if (href === '/') {
       return pathname === '/';
     }
-    return pathname.startsWith(href);
+    return pathname && pathname.startsWith(href);
   };
 
   return (
@@ -168,6 +169,11 @@ export default function Navigation({ isDark = false }: NavigationProps) {
                   )}
                 </AnimatePresence>
               </div>
+
+              {/* PWA Install Button */}
+              <div className="ml-2">
+                <PWAInstallButton isScrolled={isScrolled} />
+              </div>
             </div>
 
             {/* Mobile menu button */}
@@ -249,6 +255,13 @@ export default function Navigation({ isDark = false }: NavigationProps) {
                       </motion.div>
                     );
                   })}
+                </div>
+
+                {/* Mobile PWA Install Button */}
+                <div className="pt-4 border-t border-gray-200 px-4">
+                  <div className="flex justify-center">
+                    <PWAInstallButton isScrolled={true} isMobile={true} />
+                  </div>
                 </div>
               </div>
             </motion.div>

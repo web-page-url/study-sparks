@@ -393,7 +393,7 @@ User query: ${prompt}`;
               <p className="text-xs text-gray-500 mt-3 text-center">
                 <span className="inline-flex items-center gap-1">
                   <span className="w-2 h-2 bg-violet-400 rounded-full animate-pulse"></span>
-                  Powered by Gemini AI • Ask about subjects, courses, or platform features
+                  Created by Anubhav • Ask about subjects, courses, or platform features
                 </span>
               </p>
             </div>
