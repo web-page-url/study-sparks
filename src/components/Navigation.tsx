@@ -32,9 +32,9 @@ const navigationItems = [
   { name: 'About', href: '/about', icon: Info },
   { name: 'Teachers', href: '/teachers', icon: Users },
   { name: 'Subjects', href: '/subjects', icon: BookOpen },
-  { name: 'Live Classes', href: '/live-classes', icon: Video },
-  { name: 'Community', href: '/community', icon: Users2 },
-  { name: 'Contact', href: '/contact', icon: Mail },
+  // { name: 'Live Classes', href: '/live-classes', icon: Video },
+  // { name: 'Community', href: '/community', icon: Users2 },
+  // { name: 'Contact', href: '/contact', icon: Mail },
   { name: 'Help', href: '/help', icon: HelpCircle },
 ];
 
