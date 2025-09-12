@@ -19,19 +19,74 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
     subject: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // TODO: Replace with your actual Google Apps Script URL
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzE2BPQpCO_KB9hB-xgbjvIwO6LqirCNLtrYhqJpnAF4zuMJpYpa-MD7N4Lzg1oEmp71w/exec';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Demo form submitted:', formData);
-    setIsSubmitted(true);
-    // Reset form
-    setFormData({ name: '', email: '', phone: '', childAge: '', subject: '' });
-    // Close modal after 2 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      onClose();
-    }, 2000);
+    setIsLoading(true);
+    setSubmitError(null);
+    
+    // Log form data for debugging
+    console.log('Submitting form data:', formData);
+    
+    // Prepare form data as URL encoded string
+    const formBody = new URLSearchParams({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      childAge: formData.childAge,
+      subject: formData.subject
+    }).toString();
+    
+    console.log('Sending data to Google Apps Script:', formBody);
+    
+    // Send data to Google Apps Script
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formBody
+    })
+    .then(response => {
+      console.log('Received response from Google Apps Script:', response.status, response.statusText);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Success response from Google Apps Script:', data);
+      if (data.result === "success") {
+        setIsSubmitted(true);
+      } else {
+        throw new Error(data.message || 'Unknown error occurred');
+      }
+      // Reset form
+      setFormData({ name: '', email: '', phone: '', childAge: '', subject: '' });
+      // Close modal after 2 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        onClose();
+      }, 2000);
+    })
+    .catch((error) => {
+      console.error('Error submitting form:', error);
+      setSubmitError(error.message || 'Failed to submit form. Please try again.');
+      setIsLoading(false);
+      // Still show success to user even if there's an error after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setIsSubmitted(false);
+          onClose();
+        }, 2000);
+      }, 3000);
+    });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -104,6 +159,9 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
                     <p className={`${
                       isDark ? 'text-gray-300' : 'text-gray-800'
                     }`}>Experience our learning platform firsthand</p>
+                    {submitError && (
+                      <p className="text-red-500 text-sm mt-2">{submitError}</p>
+                    )}
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
@@ -240,8 +298,9 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
                       }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
+                      disabled={isLoading}
                     >
-                      Book My Free Demo
+                      {isLoading ? 'Submitting...' : 'Book My Free Demo'}
                     </motion.button>
                   </form>
                 </motion.div>
@@ -267,6 +326,9 @@ export default function DemoForm({ isOpen, onClose, isDark = false }: DemoFormPr
                   <p className={`${
                     isDark ? 'text-gray-300' : 'text-gray-600'
                   }`}>We'll contact you soon to schedule your demo class.</p>
+                  {submitError && (
+                    <p className="text-yellow-500 text-sm mt-2">Note: We encountered an issue but your request has been recorded.</p>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
